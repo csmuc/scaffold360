@@ -1,0 +1,14 @@
+<div class="<%= plural_name %>_remote_target">
+  <h1>Listing <%= plural_name %></h1>
+  
+  <ul id="<%= @_dom_prefix %><%= singular_name %>_list" class="<%= singular_name %>_list">
+    <%%= render 'collection', :<%= plural_name %>=>@<%= plural_name %> %>
+  </ul>
+
+  <%% if @<%= plural_name %>.is_a?(WillPaginate::Collection) && @<%= plural_name %>.total_pages > 0 %>
+  <div id="<%= @_dom_prefix %><%= plural_name %>_pagination" class="pagination_links">
+    <%%= render 'pagination', :collection=>@<%= plural_name %> %>
+  </div>  
+  <%% end %>
+</div>
+

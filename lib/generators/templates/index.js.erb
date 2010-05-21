@@ -1,0 +1,8 @@
+// view for "load more"
+// Prototype
+Element.insert('<%%= @_dom_prefix %><%= singular_name %>_list', {bottom:"<%%= escape_javascript(render 'collection', :<%= plural_name %>=>@<%= plural_name %>)%>"});
+Element.update('<%%= @_dom_prefix %><%= plural_name %>_pagination', "<%%= escape_javascript(render 'pagination', :collection=>@<%= plural_name %>  )%>");
+
+// jQuery
+// TODO
+ 

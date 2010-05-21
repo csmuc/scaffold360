@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    rails generate scaffold360 Thing
+
+    This will create:
+        what/will/it/create

@@ -1,0 +1,15 @@
+<%%= form_for(@<%= singular_name %>, :remote=>remote) do |f| %>
+  <%% if remote %><input type="hidden" name="format" value="htmlf"><%% end %>
+	<%%= render 'shared/error_messages', :target=>@<%= singular_name %> %>
+
+<% for attribute in attributes -%>
+  <div class="field">
+    <%%= f.label :<%= attribute.name %> %><br />
+    <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>
+  </div>
+<% end -%>
+
+  <div class="actions">
+    <%%= f.submit %>
+  </div>
+<%% end %>

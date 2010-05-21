@@ -1,0 +1,14 @@
+<div id="scratchpad"></div>
+
+<%%= render 'index' %>
+
+<ul class="actions">
+  <li>
+		<%%= link_to 'List (Lightbox)', <%= plural_name %>_path(:format=>:htmlf, :_dom_prefix=>'lb'), :rel=>'facebox' %>
+  </li>
+	<li>
+		<%%= link_to 'New <%= singular_name %> (Page)', new_<%= singular_name %>_path %> |
+		<%%= link_to 'New <%= singular_name %> (DIV)', new_<%= singular_name %>_path(:format=>:htmlf), :remote=>{:update=>'scratchpad'} %> |
+		<%%= link_to 'New <%= singular_name %> (Lightbox)', new_<%= singular_name %>_path(:format=>:htmlf), :rel=>'facebox' %>
+	</li>
+</ul>

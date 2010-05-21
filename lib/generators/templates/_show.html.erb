@@ -1,0 +1,18 @@
+<div class="<%= singular_name %>_remote_target">
+
+<h1>Showing <%= singular_name %></h1>
+<p class="notice"><%%= notice %></p>
+<%%= render 'object', :<%= singular_name %>=>@<%= singular_name %>, :padding=>{:element=>:div, :object=>@<%= singular_name %>} %>
+
+<ul class="menu">
+  <li>
+    <%%= link_to 'Edit', edit_<%= singular_name %>_path(@<%= singular_name %>) %> |
+    <%%= link_to 'Edit (AJAX)', edit_<%= singular_name %>_path(@<%= singular_name %>, :format=>:htmlf), :remote=>{:replace=>'.<%= singular_name %>_remote_target'} %>
+	</li>
+	
+  <li>
+    <%%= link_to 'Destroy', @<%= singular_name %>, :confirm => 'Are you sure?', :method => :delete %> |
+    <%%= link_to 'Destroy (AJAX / TODO)', @<%= singular_name %>, :confirm => 'Are you sure?', :method => :delete, :remote=>{:replace=>'.<%= singular_name %>_remote_target'} %>
+	</li>
+</ul>
+</div>
