@@ -5,7 +5,7 @@
     <%%= render 'collection', :<%= plural_name %>=>@<%= plural_name %> %>
   </ul>
 
-  <%% if @<%= plural_name %>.is_a?(WillPaginate::Collection) && @<%= plural_name %>.total_pages > 0 %>
+  <%% if @<%= plural_name %>.is_a?(WillPaginate::Collection) && @<%= plural_name %>.total_pages > 1 %>
   <div id="<%= @_dom_prefix %><%= plural_name %>_pagination" class="pagination_links">
     <%%= render 'pagination', :collection=>@<%= plural_name %> %>
   </div>  

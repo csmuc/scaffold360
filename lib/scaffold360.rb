@@ -35,6 +35,9 @@
 # http://caffeinedd.com/guides/331-making-generators-for-rails-3-with-thor
 # http://paulbarry.com/articles/2010/01/13/customizing-generators-in-rails-3
 
+# htmlf => in Ajax zwecks SEO/degradable links???
+# - _object -> _<resource> 
+# - :padding wird noch in _show benötigt
 # - jQuery
 # - destroy Ajax
 # - test-coverage (generate functional tests, test plugin)
@@ -57,7 +60,13 @@ module Scaffold360
       # support :replace param
       dom_id = options.delete(:replace)
       dom_id ||= r[:replace] if r.is_a?(Hash)   # also support extracting the update arg from :remote hash
-      html_options["data-replace-success"] = dom_id if dom_id          
+      html_options["data-replace-success"] = dom_id if dom_id
+      
+      # support :remote => { :format => }
+      if r.is_a?(Hash) && (f = r[:format])
+        html_options["data-remote-format"] = f
+      end
+      
       html_options
     end
   end

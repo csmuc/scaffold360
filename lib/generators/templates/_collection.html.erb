@@ -5,8 +5,8 @@
 		<ul class="actions">
 		<li>
     <%%= link_to 'Details (Page)',     <%= singular_name %> %> |
-    <%%= link_to 'Details (DIV)',      <%= singular_name %>_path(<%= singular_name %>, :format=>:htmlf), :remote=>{:update=>'scratchpad'} %> |
-    <%%= link_to 'Details (Lightbox)', <%= singular_name %>_path(<%= singular_name %>, :format=>:htmlf), :rel=>'facebox' %>
+    <%%= link_to 'Details (DIV)',      <%= singular_name %>_path(<%= singular_name %>), :remote=>{:update=>'scratchpad', :format=>:htmlf} %> |
+    <%%= link_to 'Details (Lightbox)', <%= singular_name %>_path(<%= singular_name %>), :rel=>'facebox' %>
 		</li>
 		</ul>
   </li>
