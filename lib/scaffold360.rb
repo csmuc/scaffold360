@@ -1,3 +1,5 @@
+# htmlf - semantic html - http_422
+
 #- htmlf
 
 #- extended :remote param (link_to, form_for, form_tag, JS)
@@ -16,6 +18,11 @@
 # http://github.com/robertgaal/facebox-for-prototype
 
 # TODO:
+# - http://github.com/rails/rails/commit/7008911222826eef07a338bf4cab27b83fe90ce1
+# - CSS (thing.css, ...)
+# - shared partial: _error_messages
+# - _object -> _<resource> 
+
 # DONE will_paginate -> htmlf format
 # DONE "load more" how to update
 # DONE - show mit div / edit ohne LB  
@@ -27,16 +34,15 @@
 # DONE - index Ajax / LB
 
 # - generator
-#   - CSS (thing.css, ...)
 #   - JS
-#   - shared partial: _error_messages
 # http://blog.plataformatec.com.br/2010/01/discovering-rails-3-generators/
 # http://guides.rails.info/generators.html
 # http://caffeinedd.com/guides/331-making-generators-for-rails-3-with-thor
 # http://paulbarry.com/articles/2010/01/13/customizing-generators-in-rails-3
 
-# htmlf => in Ajax zwecks SEO/degradable links???
-# - _object -> _<resource> 
+# DONE - htmlf => in Ajax zwecks SEO/degradable links???
+
+# - _index == index ??? (ajax reload whole page)
 # - :padding wird noch in _show benötigt
 # - jQuery
 # - destroy Ajax
@@ -72,26 +78,29 @@ module Scaffold360
   end
   
   # :remote support by will_paginate
-  module WillPaginate
-    class RemoteLinkRenderer < ::WillPaginate::ViewHelpers::LinkRenderer
-      def link(text, target, attributes = {})
+  if defined?(::WillPaginate::ViewHelpers::LinkRenderer)
+    module WillPaginate
+      class RemoteLinkRenderer < ::WillPaginate::ViewHelpers::LinkRenderer
+        def link(text, target, attributes = {})
+          # force to use htmlf mime type
+          #@base_url_params||={}        
+          #@base_url_params[:format]='htmlf'        
 
-        # force to use htmlf mime type
-        #@base_url_params||={}        
-        #@base_url_params[:format]='htmlf'        
-        
-        attributes['data-remote']=true
-        attributes.merge! Scaffold360::Helper.convert_remote_to_html_options(@options)
-        super(text, target, attributes)
+          attributes['data-remote']=true
+          attributes.merge! Scaffold360::Helper.convert_remote_to_html_options(@options)
+          super(text, target, attributes)
+        end
       end
     end
-  end
+  end  
 end
 
 
 module ActionView
   # patch link_to / form helper methods
   module Helpers
+  if Rails::VERSION::MAJOR == 3
+      
     # patched (IN AN UGLY WAY) form_for to support: :remote => { :replace => :self }, or :remote => { :replace => :self }
     # or :remote => { :update => '123' }
     # Change: Pass :remote param in html hash
@@ -150,6 +159,11 @@ module ActionView
         output << fields_for(object_name, *(args << options), &proc)
         output.safe_concat('</form>')
       end
+      
+    else
+      # Rails 2 TODO
+    end
+    
     end    
   end
   
