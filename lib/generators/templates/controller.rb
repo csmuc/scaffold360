@@ -58,7 +58,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         #format.xml    { render :xml => @<%= file_name %>, :status => :created, :location => @<%= file_name %> }
       else
         format.html   { render :action => "new" }
-        format.htmlf  { render :partial => 'new', :object=>@<%= file_name %> }
+        format.htmlf  { render :partial => 'new', :object=>@<%= file_name %>, :status => :unprocessable_entity }
         #format.xml    { render :xml => @<%= orm_instance.errors %>, :status => :unprocessable_entity }
       end
     end
@@ -88,7 +88,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         #format.xml    { head :ok }
       else
         format.html   { render :action  => "edit" }
-        format.htmlf  { render :partial => 'edit', :object=>@<%= file_name %> }
+        format.htmlf  { render :partial => 'edit', :object=>@<%= file_name %>, :status => :unprocessable_entity }
         #format.xml    { render :xml => @<%= orm_instance.errors %>, :status => :unprocessable_entity }
       end
     end

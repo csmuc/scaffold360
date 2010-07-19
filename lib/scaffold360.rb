@@ -1,4 +1,8 @@
-# htmlf - semantic html - http_422
+# _object -> _<name>
+# shared/partials
+# 
+
+# destroy -> edit page
 
 #- htmlf
 
