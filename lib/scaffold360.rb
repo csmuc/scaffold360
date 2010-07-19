@@ -1,8 +1,3 @@
-# _object -> _<name>
-# shared/partials
-# 
-
-# destroy -> edit page
 
 #- htmlf
 

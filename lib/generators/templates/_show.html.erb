@@ -9,10 +9,5 @@
     <%%= link_to 'Edit', edit_<%= singular_name %>_path(@<%= singular_name %>) %> |
     <%%= link_to 'Edit (AJAX)', edit_<%= singular_name %>_path(@<%= singular_name %>), :remote=>{:replace=>'.<%= singular_name %>_remote_target', :format=>:htmlf} %>
 	</li>
-	
-  <li>
-    <%%= link_to 'Destroy', @<%= singular_name %>, :confirm => 'Are you sure?', :method => :delete %> |
-    <%%= link_to 'Destroy (AJAX / TODO)', @<%= singular_name %>, :confirm => 'Are you sure?', :method => :delete, :remote=>{:replace=>'.<%= singular_name %>_remote_target'} %>
-	</li>
 </ul>
 </div>
