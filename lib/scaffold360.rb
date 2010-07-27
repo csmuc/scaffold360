@@ -98,8 +98,6 @@ end
 module ActionView
   # patch link_to / form helper methods
   module Helpers
-  if Rails::VERSION::MAJOR == 3
-      
     # patched (IN AN UGLY WAY) form_for to support: :remote => { :replace => :self }, or :remote => { :replace => :self }
     # or :remote => { :update => '123' }
     # Change: Pass :remote param in html hash
@@ -149,7 +147,7 @@ module ActionView
           args.unshift object
         end
 
-### THE ONLY PART CHANGED
+### THE ONLY PART THAT NEEDS TO BE CHANGED BY SCAFFOLD360
         if (ro = options.delete(:remote))
           options[:html][:remote] = ro
         end
@@ -158,97 +156,22 @@ module ActionView
         output << fields_for(object_name, *(args << options), &proc)
         output.safe_concat('</form>')
       end
-      
-    else
-      # Rails 2 TODO
-    end
-    
     end    
-  end
-  
-  # padding support by partials
-  # does not really work right now (in controllers)
-if false  
-  module Partials
-    class PartialRenderer
-      # TODO:
-      # - check xss-safety
-      # - only allow li / div
-      # DONE - support prefix
-      def render_partial_with_padding(object = @object)
-        # support passing :padding as local and as extra arg as well
-        # render 'project', :project => @project, :padding=>{:element=>:div, :object=>@project}
-        p = @locals[:padding]
-
-        # support passing :padding as extra arg as well
-        # render :partial => 'project', :object=>@project, :padding=>:div
-        p ||= @options[:padding]
-        
-        if p && (po = find_object_for_padding(object, p))
-          element_name = p.is_a?(Hash) ? p[:element] : p
-          element_name ||= :div
-          
-          prefix = p.is_a?(Hash) ? p[:prefix] : nil
-          s = "<#{element_name} id=\"#{ActionController::RecordIdentifier.dom_id(po, prefix)}\" class=\"#{ActionController::RecordIdentifier.dom_class(po, prefix)}\">".html_safe
-          s.safe_concat(render_partial_without_padding(object))
-          s.safe_concat("</#{element_name}>")
-          s
-        else
-          render_partial_without_padding(object)
-        end        
-      end
-      alias_method_chain :render_partial, :padding
-      
-      def find_object_for_padding(object, padding)
-        return object unless object.nil?
-        padding.is_a?(Hash) ? padding[:object] : nil
-      end
-        
-    end
-  end
-end  
-  
+  end    
 end
-
-
-
-
 
 
 # register new mime type
 Mime::Type.register_alias "text/html", :htmlf
 
 # use html partials when responding to htmlf requests
-if Rails::VERSION::MAJOR == 3
-  module ActionView
-    class LookupContext #:nodoc:
-      module Details
-        def formats=(value)
-          value = nil    if value == [:"*/*"]
-          value << :html if value == [:js] || value == [:htmlf]
-          super(value)
-        end
-      end
-    end
-  end
-else
-  # http://www.amiablecoder.com/2009/08/rails-dive-module-mimeresponds.html
-  # http://yehudakatz.com/2009/01/03/todays-dispatch-weaning-actionview-off-of-content-negotiation/
-  module ActionController #:nodoc:
-    module MimeResponds #:nodoc:
-      class Responder #:nodoc:
-        def custom(mime_type, &block)
-          mime_type = mime_type.is_a?(Mime::Type) ? mime_type : Mime::Type.lookup(mime_type.to_s)
-  
-          @order << mime_type
-  
-          @responses[mime_type] ||= Proc.new do
-            @response.template.template_format = mime_type.to_sym
-            @response.template.template_format=:html if @response.template.template_format==:html_f
-            @response.content_type = mime_type.to_s
-            block_given? ? block.call : @controller.send(:render, :action => @controller.action_name)
-          end
-        end
+module ActionView
+  class LookupContext #:nodoc:
+    module Details
+      def formats=(value)
+        value = nil    if value == [:"*/*"]
+        value << :html if value == [:js] || value == [:htmlf]
+        super(value)
       end
     end
   end
