@@ -9,6 +9,9 @@
 
 #- will_paginate extension
 
+# pagination like this?
+# scope :paginate, lambda{ |page,per_page| limit(per_page.to_i).offset((page.to_i-1)*per_page.to_i) }
+
 #- generator
 # pages: index, show, edit, new
 #   full partials: _index, _show, _edit, _new
@@ -126,6 +129,8 @@ module ActionView
 
     
     module FormHelper
+      # very unfortunate monkeypatch. form_for needs to support not only remote=true but pass on
+      # hashes, too.
       def form_for(record_or_name_or_array, *args, &proc)
         raise ArgumentError, "Missing block" unless block_given?
 
@@ -137,24 +142,26 @@ module ActionView
           object_name = record_or_name_or_array
         when Array
           object = record_or_name_or_array.last
-          object_name = options[:as] || ActionController::RecordIdentifier.singular_class_name(object)
+          object_name = options[:as] || ActiveModel::Naming.singular(object)
           apply_form_for_options!(record_or_name_or_array, options)
           args.unshift object
         else
           object = record_or_name_or_array
-          object_name = options[:as] || ActionController::RecordIdentifier.singular_class_name(object)
+          object_name = options[:as] || ActiveModel::Naming.singular(object)
           apply_form_for_options!([object], options)
           args.unshift object
         end
 
 ### THE ONLY PART THAT NEEDS TO BE CHANGED BY SCAFFOLD360
+        # (options[:html] ||= {})[:remote] = true if options.delete(:remote)
         if (ro = options.delete(:remote))
-          options[:html][:remote] = ro
+          (options[:html] ||= {})[:remote] = ro
         end
 ###
+
         output = form_tag(options.delete(:url) || {}, options.delete(:html) || {})
         output << fields_for(object_name, *(args << options), &proc)
-        output.safe_concat('</form>')
+        output.safe_concat('</form>')                
       end
     end    
   end    
