@@ -1,6 +1,6 @@
 # encoding: utf-8
 Gem::Specification.new do |s|
-  s.name    = 'will_paginate'
+  s.name    = 'scaffold360'
   s.version = 1.0
   s.date    = '2010-02-05'
   
