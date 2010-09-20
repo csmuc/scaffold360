@@ -1,16 +1,24 @@
-
+# TODO:
+# - pagination: scope :paginate, lambda{ |page,per_page| limit(per_page.to_i).offset((page.to_i-1)*per_page.to_i) }
+# - shared partial: _error_messages
+# - RC fix: pluralize names
 #- htmlf
 
 #- extended :remote param (link_to, form_for, form_tag, JS)
 # :remote=>{:update=>'project_list', :position=>:bottom}
 
+# EEEEEEEEEEEEE Missing template projects/create with {:locale=>[:en, :en], :handlers=>[:rhtml, :rxml, :erb, :builder, :rjs], :formats=>[:html]} in view paths "/Users/cs/projects/rails_apps/sandbox3/app/views"
+# undefined local variable or method `sdfsdf' for #<ActionController::Responder:0x10280c480>/Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/responder.rb:149:in `navigation_behavior'
+# /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/responder.rb:128:in `to_html'
+# /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/responder.rb:119:in `send'
+# /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/responder.rb:119:in `respond'
+# /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/responder.rb:112:in `call'
+# /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/mime_responds.rb:232:in `respond_with'
+
+
+
 # NOT NEEDED ANY LONGER!
 #- partial :padding
-
-#- will_paginate extension
-
-# pagination like this?
-# scope :paginate, lambda{ |page,per_page| limit(per_page.to_i).offset((page.to_i-1)*per_page.to_i) }
 
 #- generator
 # pages: index, show, edit, new
@@ -22,7 +30,6 @@
 # TODO:
 # - http://github.com/rails/rails/commit/7008911222826eef07a338bf4cab27b83fe90ce1
 # - CSS (thing.css, ...)
-# - shared partial: _error_messages
 # - _object -> _<resource> 
 
 # DONE will_paginate -> htmlf format
@@ -51,6 +58,32 @@
 # - test-coverage (generate functional tests, test plugin)
 
 module Scaffold360
+  class HtmlfResponder < ActionController::Responder
+    def to_htmlf
+      set_flash_message! if respond_to?(:set_flash_message!) && set_flash_message?    # support Plataformatec's FlashResponder
+
+      render :partial => controller.action_name
+    rescue ActionView::MissingTemplate => e
+      htmlf_navigation_behavior(e)
+    end
+
+    protected
+
+      # This is the common behavior for "navigation" requests, like :html, :iphone and so forth.
+      def htmlf_navigation_behavior(error)
+        if get?
+          raise error
+        elsif has_errors? && default_action
+          render :partial => default_action.to_s, :status => :unprocessable_entity
+        else
+          render :partial => 'show'
+        end
+      end
+
+  end
+  
+  
+  
   module Helper
     def self.convert_remote_to_html_options(options)
       r = options[:remote]
