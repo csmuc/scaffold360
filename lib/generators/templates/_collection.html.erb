@@ -1,5 +1,5 @@
 <%% <%= plural_name %>.each do |<%= singular_name %>| %>
-  <li id="<%%= dom_id(<%= singular_name %>, @_dom_prefix) %>" class="<%= singular_name %>">
+  <li class="<%= singular_name %>">
     <%%= render 'object', :<%= singular_name %>=><%= singular_name %> %>
 		
 		<ul class="actions">
