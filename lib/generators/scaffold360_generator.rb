@@ -34,6 +34,9 @@ module Erb
           filename = filename_with_extensions(view)
           template filename, File.join("app/views", controller_file_path, filename)
         end
+        
+        # also generate a css file for this model. Maybe this should be part of the StylesheetGenerator, but the filename is not available there
+        template "model.css", "public/stylesheets/#{file_name.pluralize}.css" if behavior == :invoke
       end
 
       protected

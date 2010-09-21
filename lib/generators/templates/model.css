@@ -1,0 +1,36 @@
+.<%= singular_name %>_container h1 {
+  background: #4A5259;
+  padding: 10px 0 10px 10px;
+  color:#FFF;
+}
+
+.<%= singular_name %>_container .pagination_.<%= plural_name %> {
+  border: solid 1px #000;
+  margin:10px; padding:10px;
+}
+
+.<%= plural_name %> {
+  margin:0px;
+  padding:0px;
+}
+
+.<%= singular_name %>_container .actions > li {
+  float:left;
+  list-style: none;
+  margin-right:6px;
+}
+
+ul.<%= plural_name %>_container > li {
+  list-style: none;
+}
+
+.<%= singular_name %> {
+  border: solid 1px #444;
+  margin:4px; padding:4px;
+  background:#F8F8FA;
+  
+  /* http://www.quirksmode.org/css/clearing.html */
+  overflow: auto;
+  width: 100%
+}
+
