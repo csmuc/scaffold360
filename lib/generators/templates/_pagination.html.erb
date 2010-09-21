@@ -1,8 +1,6 @@
-<%%= will_paginate(collection, :params=>{:format=>nil} ) %>
-<hr>
-<%%= will_paginate(collection, :remote=>{:replace=>'.<%= plural_name %>_remote_target'}, :params=>{:format=>:htmlf}, :renderer=>Scaffold360::WillPaginate::RemoteLinkRenderer) %>
-
 <%% if collection.current_page < collection.total_pages %>
-  <hr>
-  <%%= link_to 'Load More', <%= plural_name %>_path(:page=>collection.current_page+1, :prefix=>@_dom_prefix), :remote=>true %>
+  <%%= link_to 'Load More', <%= plural_name %>_path(:page => collection.current_page+1, :prefix => @_dom_prefix), :remote => true %>
 <%% end %>
+
+<%%= will_paginate(collection, :params => { :format => nil } ) if false %>
+<%%= will_paginate(collection, :remote => { :replace => '.<%= singular_name %>_container'}, :params => { :format => :htmlf }, :renderer=>Scaffold360::WillPaginate::RemoteLinkRenderer) %>

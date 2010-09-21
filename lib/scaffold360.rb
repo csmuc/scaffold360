@@ -2,7 +2,14 @@
 # - pagination: scope :paginate, lambda{ |page,per_page| limit(per_page.to_i).offset((page.to_i-1)*per_page.to_i) }
 # - shared partial: _error_messages
 # - RC fix: pluralize names
-#- htmlf
+
+# TODO:
+# - http://github.com/rails/rails/commit/7008911222826eef07a338bf4cab27b83fe90ce1
+# - CSS (thing.css, ...)
+# - _object -> _<resource> 
+# - _index == index ??? (ajax reload whole page)
+# - destroy Ajax
+# - test-coverage
 
 #- extended :remote param (link_to, form_for, form_tag, JS)
 # :remote=>{:update=>'project_list', :position=>:bottom}
@@ -15,47 +22,10 @@
 # /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/responder.rb:112:in `call'
 # /Users/cs/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.0/lib/action_controller/metal/mime_responds.rb:232:in `respond_with'
 
-
-
-# NOT NEEDED ANY LONGER!
-#- partial :padding
-
-#- generator
-# pages: index, show, edit, new
-#   full partials: _index, _show, _edit, _new
-#     _collection, _project, _form
-
-# http://github.com/robertgaal/facebox-for-prototype
-
-# TODO:
-# - http://github.com/rails/rails/commit/7008911222826eef07a338bf4cab27b83fe90ce1
-# - CSS (thing.css, ...)
-# - _object -> _<resource> 
-
-# DONE will_paginate -> htmlf format
-# DONE "load more" how to update
-# DONE - show mit div / edit ohne LB  
-# DONE - lightbox / div prefix (enable simult.)
-# => page / div / LB durchparametrisieren => nur noch einen edit-link, entsprechendes prefix
-# ==> gar nichts, ".project_remote_target"
-
-# DONE - facebox / Ajax update
-# DONE - index Ajax / LB
-
-# - generator
-#   - JS
 # http://blog.plataformatec.com.br/2010/01/discovering-rails-3-generators/
 # http://guides.rails.info/generators.html
 # http://caffeinedd.com/guides/331-making-generators-for-rails-3-with-thor
 # http://paulbarry.com/articles/2010/01/13/customizing-generators-in-rails-3
-
-# DONE - htmlf => in Ajax zwecks SEO/degradable links???
-
-# - _index == index ??? (ajax reload whole page)
-# - :padding wird noch in _show benötigt
-# - jQuery
-# - destroy Ajax
-# - test-coverage (generate functional tests, test plugin)
 
 module Scaffold360
   class HtmlfResponder < ActionController::Responder

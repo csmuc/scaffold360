@@ -8,7 +8,11 @@
   </li>
 	<li>
 		<%%= link_to 'New <%= singular_name %> (Page)', new_<%= singular_name %>_path %> |
+  </li>
+	<li>
 		<%%= link_to 'New <%= singular_name %> (DIV)', new_<%= singular_name %>_path, :remote=>{:update=>'scratchpad', :format=>:htmlf} %> |
+  </li>
+	<li>
 		<%%= link_to 'New <%= singular_name %> (Lightbox)', new_<%= singular_name %>_path(:format => :htmlf), :rel=>'facebox' %>
 	</li>
 </ul>

@@ -1,5 +1,5 @@
 class <%= controller_class_name %>Controller < ApplicationController
-  self.responder = HtmlfResponder
+  self.responder = Scaffold360::HtmlfResponder
   respond_to :html, :htmlf
 
   before_filter :set_dom_prefix
@@ -28,7 +28,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   def create
     @<%= file_name %> = <%= orm_class.build(class_name, "params[:#{file_name}]") %>
-    @<%= orm_instance %>.save
+    @<%= orm_instance.save %>
     respond_with @<%= file_name %>
   end
 
@@ -40,7 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   def update
     @<%= file_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-    @<%= orm_instance %>.save
+    @<%= orm_instance.update_attributes("params[:#{file_name}]") %>
     respond_with @<%= file_name %>
   end
 
