@@ -1,12 +1,9 @@
 # TODO:
-# - pagination: scope :paginate, lambda{ |page,per_page| limit(per_page.to_i).offset((page.to_i-1)*per_page.to_i) }
 # - shared partial: _error_messages
 # - RC fix: pluralize names
 
 # TODO:
 # - http://github.com/rails/rails/commit/7008911222826eef07a338bf4cab27b83fe90ce1
-# - CSS (thing.css, ...)
-# - _object -> _<resource> 
 # - _index == index ??? (ajax reload whole page)
 # - destroy Ajax
 # - test-coverage
@@ -83,7 +80,8 @@ module Scaffold360
   end
   
   # :remote support by will_paginate
-  if defined?(::WillPaginate::ViewHelpers::LinkRenderer)
+  if defined?(WillPaginate)
+    require 'will_paginate/view_helpers/link_renderer'
     module WillPaginate
       class RemoteLinkRenderer < ::WillPaginate::ViewHelpers::LinkRenderer
         def link(text, target, attributes = {})
