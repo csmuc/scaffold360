@@ -117,7 +117,6 @@ module ActionView
         remote_html_options = Scaffold360::Helper.convert_remote_to_html_options(options)
         if remote_html_options.size > 0
           options.merge! remote_html_options
-          options[:remote]=true  # kill our hash
         end
         
         html_options_for_form_without_update(url_for_options, options, *parameters_for_url)
