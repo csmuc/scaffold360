@@ -3,6 +3,9 @@
 # - RC fix: pluralize names
 
 # TODO:
+# http://github.com/rails/rails/commit/5e79094fc1dbb62e27cf21c0f18b586a26d5de46
+# http://github.com/rails/rails/commit/cfcef34bb54bce0cda77da4ae99774fa501ab713
+
 # - http://github.com/rails/rails/commit/7008911222826eef07a338bf4cab27b83fe90ce1
 # - _index == index ??? (ajax reload whole page)
 # - destroy Ajax
@@ -99,6 +102,10 @@ module Scaffold360
 end
 
 
+# TODO:
+# unify form/html_options_for_form and url/convert_options_to_data_attributes
+# get rid of all monkey patches
+
 module ActionView
   # patch link_to / form helper methods
   module Helpers
@@ -128,7 +135,9 @@ module ActionView
       alias_method_chain :convert_options_to_data_attributes, :update
     end
 
-    
+    # Don't simply pass an "true as remote, but allow arbitrary objects"
+    # this monkeypatch will be obsolete with Rails 3.1: https://github.com/csmuc/rails/commit/74b49e87bb17077dff70911f68fe59ca34ee6993
+    # https://github.com/csmuc/rails/commits/master/actionpack/lib/action_view/helpers/form_helper.rb    
     module FormHelper
       # very unfortunate monkeypatch. form_for needs to support not only remote=true but pass on
       # hashes, too.
