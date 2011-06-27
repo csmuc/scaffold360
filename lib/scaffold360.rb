@@ -184,10 +184,13 @@ Mime::Type.register_alias "text/html", :htmlf
 module ActionView
   class LookupContext #:nodoc:
     module Details
-      def formats=(value)
-        value = nil    if value == [:"*/*"]
-        value << :html if value == [:js] || value == [:htmlf]
-        super(value)
+      def formats=(values)
+        if values && values.size == 1
+          value = values.first
+          values = nil    if value == "*/*"
+          values << :html if value == :js || value == [:htmlf]
+        end
+        super(values)
       end
     end
   end
