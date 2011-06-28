@@ -188,7 +188,7 @@ module ActionView
         if values && values.size == 1
           value = values.first
           values = nil    if value == "*/*"
-          values << :html if value == :js || value == [:htmlf]
+          values << :html if value == :js || value == :htmlf
         end
         super(values)
       end
